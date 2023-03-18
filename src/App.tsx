@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import Navbar from './components/Navbar'
 import s from './app.module.scss'
 import FilesUpload  from './components/FilesUpload'
@@ -7,13 +7,88 @@ import t from './components/tablerow.module.scss';
 import { TableRowProps } from './components/Type'
 import uuid from 'react-uuid'
 
+interface FileListItem {
+  id: string; 
+  uncompressedFile: string;
+  compressedFile: string;
+  fileSize: string; // in mb
+  downloadLinK: string;
+}
+
+interface FileListProps {
+  fileList: FileListItem[];
+  setFileList: Dispatch<SetStateAction<FileListItem[]>>;
+}
+
+
 function App() {
+   const [files, setFiles] = useState<FileList | null>(null);
+  // const [processingIds, setProcessingIds] = useState<string[]>([]);
 
+  const [fileList, setFileList] = useState<FileListItem[]>([]);
 
-  const [files, setFiles] = useState<FileList | null>(null);
-  const[ data, setData] = useState();
-  const handleUpload = (uploadedFiles: FileList) => {
-    setFiles(uploadedFiles);
+  const handleUpload = async (uploadedFiles: FileList) => {
+    const formData = new FormData();
+    const processingIdss:string[] = [];
+
+    uploadedFiles && Array.from(Array(uploadedFiles.length).keys()).map((i)=>{
+
+      const file = uploadedFiles.item(i);
+
+      const id = uuid()
+
+      if (file) {
+        const url = URL.createObjectURL(file);
+        // use the url
+        setFileList([...fileList, {
+          id,
+          uncompressedFile: url,
+          compressedFile: '',
+          fileSize: `${(file.size ?? 0) / 1000000} MB`, // in mb
+          downloadLinK: '',
+        }])
+
+        // Append each file to the FormData object
+        formData.append('files', uploadedFiles[i]);
+        
+        // Append id to track upload
+        processingIdss.push(id);
+
+      } else {
+        // handle the case when file is null
+        return null;
+      }
+    });
+
+    try {
+
+      const response = await fetch('http://localhost:3001/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+      // Handle the response data here
+      console.log(data.files);
+      
+      for (let i = 0; i < processingIdss.length; i++) {
+        const trackedId = processingIdss[i];
+        const returnedIndex =  fileList.findIndex((item=>{
+          return item.id ===  trackedId
+        }));
+        fileList[returnedIndex] = {...fileList[returnedIndex], compressedFile: data.files[returnedIndex]}
+      }
+
+      setFileList([...fileList]);
+
+    } catch (error) {
+
+      setFiles(uploadedFiles);
+
+      // Handle the error here
+      console.error(error);
+    }
+
   };
 
   return (
@@ -39,20 +114,20 @@ function App() {
 
                 <tbody>
                   { 
-                    files && Array.from(Array(files.length).keys()).map((i)=>{
-                      const file = files.item(i);
+                    fileList && Array.from(Array(fileList.length).keys()).map((i)=>{
+                      const file = fileList[i];
                       if (file) {
-                        const url = URL.createObjectURL(file);
                         // use the url
                         return (
                           <TableRow
                             key={uuid()}
                             item={{
-                              uncompressedFile: url,
-                              compressedFile: '',
-                              fileSize: `${(file.size ?? 0) / 1000000} MB`, // in mb
-                              downloadLinK: '',
+                              uncompressedFile: file.uncompressedFile,
+                              compressedFile: file.compressedFile,
+                              fileSize: file.fileSize, // in mb
+                              downloadLinK: file.downloadLinK,
                             }}
+
                             index={i} 
                           />
                         );
