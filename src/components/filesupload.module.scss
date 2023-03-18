@@ -1,0 +1,51 @@
+.upload-container{
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	font-size: 13px;
+	justify-content: center;
+	align-items: center;
+}
+
+
+.files-upload-drop-text{
+	 font-size: 1.5rem;
+}
+
+
+.files-upload-or{
+	font-size: 14px;
+}
+
+.files-upload-select-files{
+	 font-size: 1.1rem;
+	 max-width: 200px;
+	 width: 100%;
+	 	 
+
+	 background: #eee;
+	 padding: 15px;
+}
+
+.files-upload-file-size{
+	margin-top: 20px;
+    font-size: 14px;
+}
+
+
+// Drag Area
+
+.drag-upload-area {
+  border: 2px dashed #ccc;
+  height: 90%;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  	margin: auto;
+
+}
+
+.drag-over {
+  border-color: #4a90e2;
+}

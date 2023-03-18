@@ -1,0 +1,17 @@
+// styles.css
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.upload-home{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.filesupload, fileslist{
+  display: flex;
+  flex:1;
+}
