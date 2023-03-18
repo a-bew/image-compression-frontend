@@ -23,10 +23,10 @@ const FilesUpload: React.FC<FileUploadProps> = ({ onUpload, maxFileSize }) => {
     }
   };
 
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     if (event.dataTransfer.files.length > 0) {
-      onUpload(event.dataTransfer.files);
+      await onUpload(event.dataTransfer.files);
     }
     if (dragAreaRef.current) {
       dragAreaRef.current.classList.remove(s['drag-over']);
@@ -34,9 +34,9 @@ const FilesUpload: React.FC<FileUploadProps> = ({ onUpload, maxFileSize }) => {
   };
 
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelect =async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      onUpload(e.target.files);
+     await onUpload(e.target.files);
     }
   };
 
@@ -61,7 +61,7 @@ const FilesUpload: React.FC<FileUploadProps> = ({ onUpload, maxFileSize }) => {
 
   return (
     <div
-//    className="drag-upload-area"
+      // className="drag-upload-area"
       // onDragEnter={handleDragEnter}
       // onDragOver={(e) => e.preventDefault()}
       // onDragLeave={handleDragLeave}

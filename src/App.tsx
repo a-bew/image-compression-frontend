@@ -6,6 +6,7 @@ import TableRow from './components/TableRow';
 import t from './components/tablerow.module.scss';
 import { TableRowProps } from './components/Type'
 import uuid from 'react-uuid'
+import { copyArrayOfObjects } from './utils';
 
 interface FileListItem {
   id: string; 
@@ -15,14 +16,24 @@ interface FileListItem {
   downloadLinK: string;
 }
 
-interface FileListProps {
-  fileList: FileListItem[];
-  setFileList: Dispatch<SetStateAction<FileListItem[]>>;
+// interface FileListProps {
+//   fileList: FileListItem[];
+//   setFileList: Dispatch<SetStateAction<FileListItem[]>>;
+// }
+
+if (!process.env.REACT_APP_DEBUG) {
+  console.log = () => { };
+  console.info = () => { };
+  console.warn = () => { };
+  console.error = () => { };
+  console.debug = () => { };
 }
 
-
 function App() {
-   const [files, setFiles] = useState<FileList | null>(null);
+
+  const baseURL = process.env.REACT_APP_BACKEND_URL;
+
+  const [files, setFiles] = useState<FileList | null>(null);
   // const [processingIds, setProcessingIds] = useState<string[]>([]);
 
   const [fileList, setFileList] = useState<FileListItem[]>([]);
@@ -30,6 +41,7 @@ function App() {
   const handleUpload = async (uploadedFiles: FileList) => {
     const formData = new FormData();
     const processingIdss:string[] = [];
+    let stored:any = [];
 
     uploadedFiles && Array.from(Array(uploadedFiles.length).keys()).map((i)=>{
 
@@ -40,13 +52,13 @@ function App() {
       if (file) {
         const url = URL.createObjectURL(file);
         // use the url
-        setFileList([...fileList, {
+        stored.push({
           id,
           uncompressedFile: url,
           compressedFile: '',
-          fileSize: `${(file.size ?? 0) / 1000000} MB`, // in mb
+          fileSize: `${(file.size ?? 0) / 1000000}MB`, // in mb
           downloadLinK: '',
-        }])
+        })
 
         // Append each file to the FormData object
         formData.append('files', uploadedFiles[i]);
@@ -58,28 +70,54 @@ function App() {
         // handle the case when file is null
         return null;
       }
+
     });
+
+    await setFileList(stored);
 
     try {
 
-      const response = await fetch('http://localhost:3001/upload', {
+      const response = await fetch(`${baseURL}/upload`, {
         method: 'POST',
         body: formData,
       });
 
       const data = await response.json();
       // Handle the response data here
-      console.log(data.files);
-      
-      for (let i = 0; i < processingIdss.length; i++) {
-        const trackedId = processingIdss[i];
-        const returnedIndex =  fileList.findIndex((item=>{
-          return item.id ===  trackedId
-        }));
-        fileList[returnedIndex] = {...fileList[returnedIndex], compressedFile: data.files[returnedIndex]}
-      }
+      // console.log(data.files);
 
-      setFileList([...fileList]);
+      const cloned:any = copyArrayOfObjects(stored);
+
+      setTimeout(()=>{
+
+        for (let i = 0; i < cloned.length; i++) {
+
+          const trackedId = processingIdss[i];
+
+          const returnedIndex =  processingIdss.findIndex((id=>{
+            return id ===  trackedId
+          }));
+  
+          console.log(cloned)
+  
+          // console.log(returnedIndex, data.files[returnedIndex].compressedFile, cloned.length)
+  
+          const size =  data.files[returnedIndex].size;
+  
+          const filename = data.files[returnedIndex].compressedFile.split('/').pop();
+
+          cloned[returnedIndex] = {...cloned[returnedIndex], 
+            compressedFile: `${baseURL}/${filename}`, 
+            downloadLinK: `${baseURL}/${filename}`,
+            fileSize: `${cloned[i].fileSize} / ${(size ?? 0) / 1000000}MB`, // in mb
+
+          }
+
+        }
+  
+        setFileList([...cloned]);
+  
+      }, 1000)
 
     } catch (error) {
 
@@ -87,6 +125,7 @@ function App() {
 
       // Handle the error here
       console.error(error);
+
     }
 
   };
@@ -107,7 +146,7 @@ function App() {
                     {<th>SN</th>}
                     {<th>Uncompressed</th>}
                     {<th>Compressed</th>}
-                    {<th>File size</th>}
+                    {<th>File size - Old / New</th>}
                     {<th>Download Link</th>}
                   </tr>
                 </thead>

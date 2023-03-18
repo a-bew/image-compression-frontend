@@ -4,22 +4,36 @@
   display: flex; 
   flex-direction: column;
   align-items: flex-start; 
+
 }
 
 .tag-tagtable table {
   width: 100%;
   border-collapse: collapse;
   font-size: 12px;
+ 
 }
 
 .tag-tagtable th,
 .tag-tagtable td {
-  text-align: left;
+  text-align: center;
+
   padding: 8px;
 //  border-bottom: 1px solid #ddd;
   //line-height: 15px;
   //letter-spacing:0.02em;
+  flex: 1;
+}
 
+.tag-tagtable  th:first-child,
+.tag-tagtable  td:first-child{
+    text-align: center;
+}
+
+
+.tag-tagtable  th:last-child,
+.tag-tagtable  td:last-child{
+    text-align: center;
 }
 
 .tag-tagtable tr {

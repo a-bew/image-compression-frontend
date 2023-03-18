@@ -2,7 +2,7 @@ interface ItemProps {
 	uncompressedFile: string;
 	compressedFile?: string;
 	fileSize: string;  // in kb
-	downloadLinK?: string;
+	downloadLinK: string;
 }
 
 export interface TableRowProps {

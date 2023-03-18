@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
+import DownloadButton from './DownloadButton';
 import { TableRowProps } from './Type'
+import RoundedLoader from './RoundedLoader';
+import useCountdown from './useCountdown';
+import { FcDeleteDatabase } from 'react-icons/fc';
 
 const TableRow: React.FC<TableRowProps> = ({ item, index }) => {
 
@@ -16,8 +20,15 @@ const TableRow: React.FC<TableRowProps> = ({ item, index }) => {
   //       );
   //     }
   //   };
+  const [hasStopped, setHasStopped] = useState(false);
+
+  const onStop = ()=>{
+    setHasStopped(true)
+  }
+  const {minutesLeft, secondsLeft} = useCountdown(4, 60, onStop);
 
   return (
+
     <tr 
         style={{ background: isEvenRow ? '#fff' : '#f2f2f2' }}
         onMouseEnter = {()=>setIsHovered(true)} 
@@ -35,8 +46,17 @@ const TableRow: React.FC<TableRowProps> = ({ item, index }) => {
       <td>
           {item.fileSize  && <span>{item.fileSize}</span>}
       </td>
-      <td style = {{width:'40px'}}>
-        {<span> {item.downloadLinK}</span>}
+      <td >
+        {<span>
+          {!item.downloadLinK ? <RoundedLoader />: 
+            <span >
+           { ( hasStopped?<FcDeleteDatabase  size = {15} /> : <span style={{display: 'flex', gap: '15px', flexWrap: 'wrap', justifyContent: 'center'}}>
+                <DownloadButton url={item.downloadLinK} />
+                <span >{minutesLeft}:{secondsLeft}</span>
+            </span>)}
+            </span>
+            } 
+          </span>}
       </td>
 
     </tr> 

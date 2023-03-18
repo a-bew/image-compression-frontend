@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import s from './navbar.module.scss';
+import Hamburger from './Hamburger';
 
 interface NavbarProps {
   title: string;
@@ -17,7 +18,8 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
     <nav className={s["navbar"]}>
       <div className={s["navbar__title"]}>{title}</div>
       <button className={s["navbar__toggle"]} onClick={handleNavToggle}>
-        <span className={s["navbar__toggle-icon"]}></span>
+        <span><Hamburger/></span>
+        {/*  className={s["navbar__toggle-icon"]} */}
       </button>
       <ul className={`${s['navbar__list']} ${showNav ? s['navbar__list--show'] : ''}`}>
         <li className={s["navbar__item"]}>
