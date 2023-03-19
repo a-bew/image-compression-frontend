@@ -1,10 +1,10 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import Navbar from './components/Navbar'
 import s from './app.module.scss'
 import FilesUpload  from './components/FilesUpload'
 import TableRow from './components/TableRow';
 import t from './components/tablerow.module.scss';
-import { TableRowProps } from './components/Type'
+import { TimeProp } from './components/Type'
 import uuid from 'react-uuid'
 import { copyArrayOfObjects } from './utils';
 
@@ -14,12 +14,11 @@ interface FileListItem {
   compressedFile: string;
   fileSize: string; // in mb
   downloadLinK: string;
+  countDown: {
+    minutesLeft:number;
+    secondsLeft:number;
+  };
 }
-
-// interface FileListProps {
-//   fileList: FileListItem[];
-//   setFileList: Dispatch<SetStateAction<FileListItem[]>>;
-// }
 
 if (!process.env.REACT_APP_DEBUG) {
   console.log = () => { };
@@ -31,10 +30,9 @@ if (!process.env.REACT_APP_DEBUG) {
 
 function App() {
 
-  const baseURL = process.env.REACT_APP_BACKEND_URL;
+  const [timeLeft, setTimeLeft] = useState<TimeProp>({});
 
-  const [files, setFiles] = useState<FileList | null>(null);
-  // const [processingIds, setProcessingIds] = useState<string[]>([]);
+  const baseURL = process.env.REACT_APP_BACKEND_URL;
 
   const [fileList, setFileList] = useState<FileListItem[]>([]);
 
@@ -73,7 +71,10 @@ function App() {
 
     });
 
-    await setFileList(stored);
+    let allFiles = [...fileList, ...stored]
+    const fileListCloned:any = copyArrayOfObjects(fileList);
+
+    await setFileList(allFiles);
 
     try {
 
@@ -84,11 +85,9 @@ function App() {
 
       const data = await response.json();
       // Handle the response data here
-      // console.log(data.files);
-
+  
       const cloned:any = copyArrayOfObjects(stored);
-
-      setTimeout(()=>{
+      const timenow: any = {}
 
         for (let i = 0; i < cloned.length; i++) {
 
@@ -97,31 +96,36 @@ function App() {
           const returnedIndex =  processingIdss.findIndex((id=>{
             return id ===  trackedId
           }));
-  
-          console.log(cloned)
-  
-          // console.log(returnedIndex, data.files[returnedIndex].compressedFile, cloned.length)
-  
+    
           const size =  data.files[returnedIndex].size;
   
-          const filename = data.files[returnedIndex].compressedFile.split('/').pop();
+          const minutes = 4; 
+          const seconds = 60
+
+      const filename = data.files[returnedIndex].compressedFile.split('/').pop();
+          // setTimeout(()=>{
+
+           timenow[processingIdss[returnedIndex]] = minutes * 60 + seconds;
+      //  }, 1000)
 
           cloned[returnedIndex] = {...cloned[returnedIndex], 
             compressedFile: `${baseURL}/${filename}`, 
             downloadLinK: `${baseURL}/${filename}`,
             fileSize: `${cloned[i].fileSize} / ${(size ?? 0) / 1000000}MB`, // in mb
-
+            
           }
-
         }
+
+        allFiles = [...fileListCloned, ...cloned];
+
+        await setTimeLeft({...timeLeft, ...timenow});
+
+        setFileList(allFiles);
   
-        setFileList([...cloned]);
-  
-      }, 1000)
 
     } catch (error) {
 
-      setFiles(uploadedFiles);
+      setFileList({...fileList});
 
       // Handle the error here
       console.error(error);
@@ -153,7 +157,8 @@ function App() {
 
                 <tbody>
                   { 
-                    fileList && Array.from(Array(fileList.length).keys()).map((i)=>{
+                    fileList && Array.from(Array(fileList.length).keys()).reverse().map((i)=>{
+                      const index = Math.abs(i - fileList.length+1);
                       const file = fileList[i];
                       if (file) {
                         // use the url
@@ -161,13 +166,16 @@ function App() {
                           <TableRow
                             key={uuid()}
                             item={{
+                              id: file.id,
                               uncompressedFile: file.uncompressedFile,
                               compressedFile: file.compressedFile,
                               fileSize: file.fileSize, // in mb
                               downloadLinK: file.downloadLinK,
+                              timeLeft :timeLeft,
+                              setTimeLeft : setTimeLeft 
                             }}
-
-                            index={i} 
+                            
+                            index={index} 
                           />
                         );
                       } else {

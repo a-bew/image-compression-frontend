@@ -1,4 +1,3 @@
-import React from 'react';
 import s from './hamburger.module.scss';
 
 const Hamburger = ()=>{

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DownloadButton from './DownloadButton';
 import { TableRowProps } from './Type'
 import RoundedLoader from './RoundedLoader';
@@ -10,6 +10,7 @@ const TableRow: React.FC<TableRowProps> = ({ item, index }) => {
   const isEvenRow = index % 2 === 0;
   const [isHovered, setIsHovered] = useState(false)
 
+  // console.log("item", item);
   // const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   //     const id = event.target.value;
   //     if (event.target.checked) {
@@ -25,7 +26,24 @@ const TableRow: React.FC<TableRowProps> = ({ item, index }) => {
   const onStop = ()=>{
     setHasStopped(true)
   }
-  const {minutesLeft, secondsLeft} = useCountdown(4, 60, onStop);
+
+  // useEffect(()=>{
+  //   if (item.downloadLinK){
+  //     const minutes = 4; 
+  //     const seconds = 60
+  //     // setTimeLeft({...timeLeft, [item.id]: minutes * 60 + seconds })
+  //     console.log("Hit")
+  //     setTimeLeft({...timeLeft, 
+  //       [item.id]: Object.keys(timeLeft).includes(item.id)? timeLeft[item.id]:  minutes * 60 + seconds })
+  //   } else {
+  //     // setTimeLeft({...timeLeft, 
+  //     //   [item.id]: Object.keys(timeLeft).includes(item.id)? timeLeft[item.id]: 0})
+  //   }
+  // },[item.downloadLinK]);
+
+    // console.log("item.id", item.id);
+
+  const {minutesLeft, secondsLeft} = useCountdown({id: item.id, timeLeft:item.timeLeft, setTimeLeft: item.setTimeLeft, onStop});
 
   return (
 
@@ -50,7 +68,7 @@ const TableRow: React.FC<TableRowProps> = ({ item, index }) => {
         {<span>
           {!item.downloadLinK ? <RoundedLoader />: 
             <span >
-           { ( hasStopped?<FcDeleteDatabase  size = {15} /> : <span style={{display: 'flex', gap: '15px', flexWrap: 'wrap', justifyContent: 'center'}}>
+           { ( (parseInt(minutesLeft) === 0 && parseInt(secondsLeft) === 0) ?<FcDeleteDatabase  size = {15} /> : <span style={{display: 'flex', gap: '15px', flexWrap: 'wrap', justifyContent: 'center'}}>
                 <DownloadButton url={item.downloadLinK} />
                 <span >{minutesLeft}:{secondsLeft}</span>
             </span>)}

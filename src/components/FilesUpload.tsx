@@ -1,4 +1,4 @@
-import React, { ReactNode, useState, useRef } from "react";
+import React, { useRef } from "react";
 import s from "./filesupload.module.scss";
 
 interface FileUploadProps {
@@ -40,16 +40,6 @@ const FilesUpload: React.FC<FileUploadProps> = ({ onUpload, maxFileSize }) => {
     }
   };
 
-  const handleFileSizeCheck = (file: File): boolean => {
-    return file.size <= maxFileSize;
-  };
-
-  const renderFileSizeError = (file: File): JSX.Element | null => {
-    if (!handleFileSizeCheck(file)) {
-      return <div style={{ color: 'red' }}>File size exceeds maximum limit of 512 MB.</div>;
-    }
-    return null;
-  };
 
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -61,11 +51,6 @@ const FilesUpload: React.FC<FileUploadProps> = ({ onUpload, maxFileSize }) => {
 
   return (
     <div
-      // className="drag-upload-area"
-      // onDragEnter={handleDragEnter}
-      // onDragOver={(e) => e.preventDefault()}
-      // onDragLeave={handleDragLeave}
-      // onDrop={handleDrop}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}

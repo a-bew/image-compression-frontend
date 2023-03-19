@@ -1,59 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import {  useEffect } from 'react';
+import { TimeProp } from './Type';
 
-interface CountdownProps {
-  seconds: number;
-  onStop: () => void;
+interface UseCountDownProps{
+  id: string, timeLeft: TimeProp,setTimeLeft:any, onStop: ()=> void
 }
-const useCountdown = (minutes:number = 0, seconds: number=0, onStop: ()=> void) => {
 
-  // const [remainingSeconds, setRemainingSeconds] = useState(seconds);
-
-  // useEffect(() => {
-  //   const timerId = setInterval(() => {
-  //     setRemainingSeconds((prevSeconds) => prevSeconds - 1);
-  //   }, 1000);
-
-  //   return () => clearInterval(timerId);
-  // }, []);
-
-
-
-
-
-
-  const [timeLeft, setTimeLeft] = useState(minutes * 60 + seconds);
+const useCountdown = ({id, timeLeft,setTimeLeft, onStop}:UseCountDownProps) => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setTimeLeft((prevTimeLeft) => {
-        if (prevTimeLeft === 0) {
+      setTimeLeft((prevTimeLeft:TimeProp) => {
+        if (prevTimeLeft[id] === 0) {
           clearInterval(intervalId);
-          return 0;
+          return prevTimeLeft;
         }
-        return prevTimeLeft - 1;
+        return { ...prevTimeLeft, [id]: prevTimeLeft[id] - 1 };
       });
     }, 1000);
     return () => clearInterval(intervalId);
   }, []);
 
-  const minutesLeft = Math.floor(timeLeft / 60);
-  const secondsLeft = timeLeft % 60;
-  
+  const minutesLeft = Math.floor(timeLeft[id] / 60);
+  const secondsLeft = timeLeft[id] % 60;
+
   useEffect(() => {
-    if (timeLeft === 0) {
+    if (timeLeft[id] === 0) {
       onStop();
     }
-  }, [timeLeft]);
+  }, [timeLeft[id]]);
 
   const stopCountdown = () => {
     onStop();
   };
-//   return (
-    // <div>
-    //   <h1>{remainingSeconds}</h1>
-    //   <button onClick={stopCountdown}>Stop</button>
-    // </div>
-//   );
   return { 
       minutesLeft: minutesLeft.toString().padStart(2, '0'),
       secondsLeft: secondsLeft.toString().padStart(2, '0')
