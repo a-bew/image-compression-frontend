@@ -1,0 +1,90 @@
+.upload-container{
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	font-size: 13px;
+	justify-content: center;
+	align-items: center;
+}
+
+
+.files-upload-drop-text{
+	 font-size: 13px;
+}
+
+
+.files-upload-or{
+	font-size: 14px;
+}
+
+.files-upload-select-files{
+	 font-size: 13px;
+	 max-width: 200px;
+	 width: 100%;
+	 	 
+
+	 background: #eee;
+	 padding: 15px;
+}
+
+.files-upload-file-size{
+	margin-top: 20px;
+    font-size: 14px;
+}
+
+
+// Drag Area
+
+.drag-upload-area {
+  border: 2px dashed #ccc;
+  height: 90%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  	margin: auto;
+
+}
+
+.drag-over {
+  border-color: #4a90e2;
+}
+
+/* FeatureSection.css */
+
+/* Modify the existing styles for .drag-upload-area and .drag-over */
+// .drag-upload-area {
+// 	position: fixed;
+// 	top: 0;
+// 	left: 0;
+// 	right: 0;
+// 	bottom: 0;
+// 	display: flex;
+// 	justify-content: center;
+// 	align-items: center;
+// 	background-color: rgba(0, 123, 255, 0.5); /* Semi-transparent background color */
+// 	z-index: 9999; /* Ensure it's above other content */
+//   }
+  
+//   .drag-over {
+// 	border-color: #4a90e2;
+// 	background-color: rgba(74, 144, 226, 0.5); /* Semi-transparent background color on hover */
+//   }
+  
+
+/* Update styling for FilesUpload */
+.files-upload-select-files {
+	font-size: 1rem; /* Adjust font size */
+	max-width: 100%; /* Ensure the button takes the full width */
+	background: #007BFF; /* Use your preferred button background color */
+	color: #fff; /* Button text color */
+	border: none;
+	padding: 15px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+  }
+  
+  .files-upload-select-files:hover {
+	background-color: #0056b3; /* Change button color on hover */
+  }
+  

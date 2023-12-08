@@ -1,0 +1,77 @@
+/* FeatureSection.css */
+
+.feature-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: #f0f0f0; /* Set your preferred background color */
+    padding: 3rem 0;
+  }
+
+  /* Update spacing and alignment in your CSS */
+.feature-section {
+    margin-bottom: 30px; /* Add spacing between FeatureSection and FilesUpload */
+}
+  
+  .feature {
+    text-align: center;
+    margin: 1rem;
+    flex: 1;
+    max-width: 300px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff; /* Feature background color */
+  }
+  
+  .feature-icon {
+    font-size: 3rem; /* Adjust icon size as needed */
+    margin-bottom: 1rem;
+    color: #007BFF; /* Icon color */
+  }
+  
+  .feature h2 {
+    font-size: 1.5rem; /* Adjust font size as needed */
+    margin-bottom: 1rem;
+    color: #333; /* Feature title color */
+  }
+  
+  .feature p {
+    font-size: 1rem; /* Adjust font size as needed */
+    color: #666; /* Feature description color */
+    line-height: 1.4;
+  }
+  
+  /* Customize radio buttons and input elements */
+  input[type="radio"],
+  input[type="range"] {
+    /* Define your custom styles here */
+    /* For example: */
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
+  
+  /* Customize the upload button */
+  .upload-button {
+    background-color: #FFD700; /* Button background color */
+    color: #333; /* Button text color */
+    font-size: 1.2rem; /* Adjust the font size as needed */
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .upload-button:hover {
+    background-color: #FFA500; /* Change button color on hover */
+  }
+  
+  /* Customize radio buttons for color options */
+  .color-option {
+    margin-right: 1rem;
+  }
+  
+  /* Additional styling for your other content goes here */
+  

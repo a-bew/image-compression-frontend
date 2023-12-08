@@ -1,0 +1,69 @@
+/* IntroSection.css */
+
+.intro-section {
+    text-align: center;
+    background-color: #007BFF; /* Set your preferred background color */
+    color: #fff; /* Text color */
+    padding: 3rem 0;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .hero {
+    /* Style your hero image or video container if needed */
+  }
+  
+  .headline {
+    font-size: 2.5rem; /* Adjust the font size as needed */
+    font-weight: bold;
+    margin: 1rem 0;
+    color: #333;
+
+  }
+  
+  .subheadline {
+    font-size: 1.5rem; /* Adjust the font size as needed */
+    margin-bottom: 1.5rem;
+    color: #555;
+
+  }
+  
+  .cta-button {
+    background-color: #FFD700; /* Button background color */
+    color: #333; /* Button text color */
+    font-size: 1.2rem; /* Adjust the font size as needed */
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    background-color: #FFA500; /* Change button color on hover */
+  }
+  
+  .feature-icons {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  
+  .feature-icons i {
+    font-size: 2rem; /* Adjust icon size as needed */
+    margin: 0 1rem;
+    color: #fff; /* Icon color */
+  }
+  
+  .benefits {
+    list-style-type: none;
+    padding: 0;
+    margin: 2rem 0;
+  }
+  
+  .benefits li {
+    font-size: 1.2rem; /* Adjust font size as needed */
+    margin: 0.5rem 0;
+  }
+  
+  /* Additional styling for your other content goes here */
+  

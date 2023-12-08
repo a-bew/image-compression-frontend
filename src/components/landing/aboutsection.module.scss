@@ -1,0 +1,40 @@
+/* AboutSection.css */
+.about-section {
+    margin-top: 30px; /* Add spacing between FilesUpload and AboutSection */
+  }
+  
+.about-section {
+    background-color: #007BFF; /* Use your preferred color scheme */
+    color: #fff;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .about-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .team-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .team-member {
+    margin: 1rem;
+    text-align: center;
+  }
+  
+  .team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .team-member p {
+    margin: 0.3rem;
+  }
+  

@@ -1,0 +1,26 @@
+/* FeatureConfigSection.css */
+
+.feature-config-section {
+    display: flex;
+    // flex-wrap: wrap;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 15px;
+    // padding: 20px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    height: 100%;
+    // font-size: 13px; 
+  }
+  
+  /* You can add more styles as needed for spacing, alignment, and color scheme */
+  
+  .scrollable-content {
+    // max-height: 400px; /* Set your desired maximum height */
+    // overflow-y: auto;
+  }
+
+
+  

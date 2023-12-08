@@ -13,6 +13,10 @@
 .filesupload, fileslist{
   display: flex;
   flex:1;
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  
 }
 
 
@@ -28,4 +32,40 @@
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 8px;
+}
+
+.feature-icons{
+  position: absolute;
+  bottom: -30px;
+  right: 0;
+  display: flex;
+  gap: 15px;
+  svg{
+    cursor: pointer;
+    color: #007BFF;
+  }
+}
+
+.feature-metrics{
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  display: flex;
+  gap: 5px;
+  font-size: 10px;
+}
+
+  // Horizontal line
+  .vertical-bottom-line{
+    border-left: 0.5px solid #dadce0;
+  }
+  
+
+  .label-style{
+    color: #007BFF;
+  }
+
+
+.feature-metrics > span{
+  cursor: pointer;
 }
