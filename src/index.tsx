@@ -3,13 +3,20 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ErrorBoundary } from 'react-error-boundary';
+import ErrorPage from './components/pages/ErrorPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+      <ErrorBoundary 
+    FallbackComponent={ErrorPage}
+    onReset={() => (window.location.href = '/')}      
+          >
+        <App />
+      </ErrorBoundary>
   </React.StrictMode>
 );
 
