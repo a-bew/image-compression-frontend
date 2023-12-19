@@ -22,7 +22,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "VITE_APP_BACKEND_URL vite",
+    "start": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "jest",
