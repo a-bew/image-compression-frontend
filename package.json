@@ -22,10 +22,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "vite",
+    "start": "VITE_APP_BACKEND_URL vite",
     "build": "tsc && vite build --legacy-peer-deps",
     "preview": "vite preview",
-    "postinstall": "npm install --legacy-peer-deps",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage .",
