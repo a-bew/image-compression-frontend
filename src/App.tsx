@@ -5,6 +5,15 @@ import FeatureConfigSection from './components/configfeatures/FeatureConfigSecti
 import AboutSection from './components/landing/AboutSection'
 import FeatureSection from './components/landing/FeatureSection'
 import IntroSection from './components/landing/IntroSection'
+import { VITE_APP_DEBUG } from './api/secrets'
+
+if (!VITE_APP_DEBUG) {
+  console.log = () => { };
+  console.info = () => { };
+  console.warn = () => { };
+  console.error = () => { };
+  console.debug = () => { };
+}
 
 // IntroSection.tsx
 

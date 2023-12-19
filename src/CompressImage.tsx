@@ -8,10 +8,7 @@ import uuid from 'react-uuid'
 import { copyArrayOfObjects } from './utils';
 import FeatureConfigSection from './components/configfeatures/FeatureConfigSectionProps';
 import Dialog from './components/customdialog/Dialog';
-import {  RxDimensions } from 'react-icons/rx';
-import { FaFileImage, FaRegFileImage, FaRulerCombined } from 'react-icons/fa';
-import {AiOutlineCheckCircle} from 'react-icons/ai';
-import { MdOutlineCancel } from 'react-icons/md';
+import { VITE_APP_BACKEND_URL } from './api/secrets';
 
 interface FileListItem {
   id: string; 
@@ -25,13 +22,6 @@ interface FileListItem {
   };
 }
 
-if (!process.env.REACT_APP_DEBUG) {
-  // console.log = () => { };
-  // console.info = () => { };
-  // console.warn = () => { };
-  // console.error = () => { };
-  // console.debug = () => { };
-}
 
 // Define a TypeScript interface for the props
 interface CompressedImageProps {
@@ -42,7 +32,7 @@ const CompressImage: React.FC<CompressedImageProps> = ({ targetDivRef }) => {
 
   const [timeLeft, setTimeLeft] = useState<TimeProp>({});
 
-  const baseURL = process.env.REACT_APP_BACKEND_URL;
+  const baseURL = VITE_APP_BACKEND_URL;
 
   const [fileList, setFileList] = useState<FileListItem[]>([]);
 
