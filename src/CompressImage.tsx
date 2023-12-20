@@ -74,14 +74,6 @@ const CompressImage: React.FC<CompressedImageProps> = ({ targetDivRef }) => {
     // imageFormat, preserveAspectRatio, width, height, quality, colorization
     const params = new URLSearchParams();
     
-    // Append the quality parameter to the FormData object
-    // params.append('imageFormat', imageFormat);
-    // params.append('aspect', `${preserveAspectRatio}`);
-    // params.append('width', `${width}`);
-    // params.append('height', `${height}`);
-    // params.append('quality', `${quality}`);
-    // params.append('color', `${colorization}`);
-  
     let allFiles = [...fileList, ...stored]
     const fileListCloned:any = copyArrayOfObjects(fileList);
 
@@ -91,14 +83,10 @@ const CompressImage: React.FC<CompressedImageProps> = ({ targetDivRef }) => {
 
       const url = `${baseURL}/manipulate-image?${params.toString()}`;
 
-      const response = await fetch(`${baseURL}/upload/manipulate-images?quality=${quality}&imageFormat=${imageFormat}&width=${width}&height=${height}&color=${colorization}`, {
+      const response = await fetch(`${baseURL}/upload/manipulate-images?quality=${quality}&imageFormat=${imageFormat}&width=${width}&height=${height}&color=${colorization}&aspect=${preserveAspectRatio}`, {
         method: 'POST',
         body: formData,
       });
-      // const response  = await fetch(url, {
-      //   method: 'POST', 
-      //   body: formData
-      // });
 
       const data = await response.json();
       // Handle the response data here
@@ -120,16 +108,13 @@ const CompressImage: React.FC<CompressedImageProps> = ({ targetDivRef }) => {
           const seconds = 60
 
       const filename = data.files[returnedIndex].compressedFile.split('/').pop();
-          // setTimeout(()=>{
 
-           timenow[processingIdss[returnedIndex]] = minutes * 60 + seconds;
-      //  }, 1000)
-
-          cloned[returnedIndex] = {...cloned[returnedIndex], 
+      timenow[processingIdss[returnedIndex]] = minutes * 60 + seconds;
+          cloned[returnedIndex] = {
+            ...cloned[returnedIndex], 
             compressedFile: `${baseURL}/${filename}`, 
             downloadLinK: `${baseURL}/${filename}`,
-            fileSize: `${cloned[i].fileSize} / ${(size ?? 0) / 1000000}MB`, // in mb
-            
+            fileSize: `${cloned[i].fileSize} / ${(size ?? 0) / 1000000}MB`, // in mb            
           }
         }
 
@@ -137,8 +122,7 @@ const CompressImage: React.FC<CompressedImageProps> = ({ targetDivRef }) => {
 
         await setTimeLeft({...timeLeft, ...timenow});
 
-        setFileList(allFiles);
-  
+        setFileList(allFiles);  
 
     } catch (error) {
 
@@ -156,8 +140,8 @@ const CompressImage: React.FC<CompressedImageProps> = ({ targetDivRef }) => {
   // State variables to hold configuration values
   const [imageFormat, setImageFormat] = useState<string>('jpeg');
   const [preserveAspectRatio, setPreserveAspectRatio] = useState<boolean>(false);
-  const [width, setWidth] = useState<number>(100);
-  const [height, setHeight] = useState<number>(100);
+  const [width, setWidth] = useState<number>(0);
+  const [height, setHeight] = useState<number>(0);
 
   const [quality, setQuality] = useState<number>(90);
   const [colorization, setColorization] = useState<string>('default');
