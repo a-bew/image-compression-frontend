@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import s from './navbar.module.scss';
 import Hamburger from './Hamburger';
+import One from '/favicon_io/favicon-16x16.png'
 
 interface NavbarProps {
   title: string;
@@ -16,7 +17,7 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
 
   return (
     <nav className={s["navbar"]}>
-      <div className={s["navbar__title"]}>{title}</div>
+      <div className={s["navbar__title"]}><img src={One} />{title}</div>
       <button className={s["navbar__toggle"]} onClick={handleNavToggle}>
         <span><Hamburger/></span>
         {/*  className={s["navbar__toggle-icon"]} */}

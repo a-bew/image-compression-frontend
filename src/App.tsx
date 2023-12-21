@@ -34,7 +34,7 @@ const App = () => {
 
   return (
     <div>
-      <Navbar title = "Image Compression App" />
+      <Navbar title = " Image At A TIme" />
       <IntroSection scrollToDiv={scrollToDiv} />
       <FeatureSection />
       <CompressImage targetDivRef={targetDivRef} />
