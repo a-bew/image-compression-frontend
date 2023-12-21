@@ -9,5 +9,9 @@ export function copyArrayOfObjects<T>(original: T[]): T[] {
     }
   
     return copy;
-  }
+}
   
+export const getFileNameFromUrl = (url: string) => {
+  const lastSlashIndex = url?.lastIndexOf('/');
+  return url.substring(lastSlashIndex + 1);
+}

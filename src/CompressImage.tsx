@@ -136,14 +136,13 @@ const CompressImage: React.FC<CompressedImageProps> = ({ targetDivRef }) => {
   };
 
   
-
   // State variables to hold configuration values
   const [imageFormat, setImageFormat] = useState<string>('jpeg');
   const [preserveAspectRatio, setPreserveAspectRatio] = useState<boolean>(false);
   const [width, setWidth] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
 
-  const [quality, setQuality] = useState<number>(90);
+  const [quality, setQuality] = useState<number>(100);
   const [colorization, setColorization] = useState<string>('default');
 
   const configDefaultValues = {
@@ -285,6 +284,7 @@ const CompressImage: React.FC<CompressedImageProps> = ({ targetDivRef }) => {
             </div>
           </div>
       </div>
+
       <Dialog isOpen={isDialogOpen} onClose={closeDialog}>
         <FeatureConfigSection
           configDefaultValues = { configDefaultValues }
