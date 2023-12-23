@@ -28,7 +28,7 @@ interface FeatureConfigSectionProps {
 }
 
 
-const FeatureConfigSection: React.FC<FeatureConfigSectionProps> = ({
+const FeatureConfigSection: React.FC<FeatureConfigSectionProps> = React.memo(({
   onImageFormatChange,
   onAspectRatioChange,
   onDimensionsChange,
@@ -76,7 +76,6 @@ const FeatureConfigSection: React.FC<FeatureConfigSectionProps> = ({
           onColorizationChange={onColorizationChange} 
           onClose =  {onClose}
           configDefaultValue = { configDefaultValues.colorization }
-    
       />)
   
       default:
@@ -90,6 +89,6 @@ const FeatureConfigSection: React.FC<FeatureConfigSectionProps> = ({
       {selectForm(featureName)}
     </>
   );
-};
+});
 
 export default FeatureConfigSection;

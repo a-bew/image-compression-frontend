@@ -1,11 +1,17 @@
-import {  useEffect } from 'react';
+import {  useEffect, useState } from 'react';
 import { TimeProp } from './Type';
 
 interface UseCountDownProps{
-  id: string, timeLeft: TimeProp,setTimeLeft:any, onStop: ()=> void
+  id: string, timeLeft: TimeProp,setTimeLeft:any
 }
 
-const useCountdown = ({id, timeLeft,setTimeLeft, onStop}:UseCountDownProps) => {
+const useCountdown = ({id, timeLeft,setTimeLeft}:UseCountDownProps) => {
+
+  const [hasStopped, setHasStopped] = useState(false);
+
+  const onStop = ()=>{
+    setHasStopped(true)
+  }
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -29,6 +35,7 @@ const useCountdown = ({id, timeLeft,setTimeLeft, onStop}:UseCountDownProps) => {
     }
   }, [timeLeft[id]]);
 
+  
   const stopCountdown = () => {
     onStop();
   };

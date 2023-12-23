@@ -6,7 +6,7 @@ interface FileUploadProps {
   maxFileSize: number;
 }
 
-const FilesUpload: React.FC<FileUploadProps> = ({ onUpload, maxFileSize }) => {
+const FilesUpload: React.FC<FileUploadProps> = React.memo(({ onUpload, maxFileSize }) => {
   
   const dragAreaRef = useRef<HTMLDivElement>(null);
 
@@ -72,7 +72,7 @@ const FilesUpload: React.FC<FileUploadProps> = ({ onUpload, maxFileSize }) => {
       <div className={`${s['files-upload-file-size']}`}>Maximum upload file size: {maxFileSize / 1000000} MB.</div>
     </div>
   );
-};
+});
 
 
 export default FilesUpload;

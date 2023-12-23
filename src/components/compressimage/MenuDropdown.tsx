@@ -1,19 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import { BsThreeDotsVertical } from "react-icons/bs";
 import s from './menudropdown.module.scss';
+import { ItemProps, ShowDropdownMenuProp } from './Type';
 
-const MenuDropdown = () => {
+interface MenuDropdownProps {
+  item: ItemProps;
+}
+const MenuDropdown = React.memo(({item: { showDropdownMenu, setShowDropdownMenu, id }}:MenuDropdownProps) => {
 
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     const [showSquareContainer, setShowSquareContainer] = useState(true);
-    
-    const [showDropdownMenu, setShowDropdownMenu] = useState(false);
 
     useEffect(() => {
         const handleOutsideClick = (event: MouseEvent) => {
           if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-            setShowDropdownMenu(false);
+            setShowDropdownMenu((showDropdownMenu:ShowDropdownMenuProp) => {
+              if (!showDropdownMenu) return { [id] : true };
+              return { ...showDropdownMenu, [id]: !showDropdownMenu[id] };
+            });
           }
         };
     
@@ -22,11 +27,14 @@ const MenuDropdown = () => {
         return () => {
           document.removeEventListener('mousedown', handleOutsideClick);
         };
-      }, []);
+      }, [dropdownRef]);
   
-      const handleThreeDotsClick = () => {
-          setShowDropdownMenu(!showDropdownMenu);
-      };
+    const handleThreeDotsClick = () => {
+      setShowDropdownMenu((showDropdownMenu:ShowDropdownMenuProp) => {
+        if (!showDropdownMenu) return { [id] : true };
+        return { ...showDropdownMenu, [id]: !showDropdownMenu[id] };
+      });
+    };
   
     const handleEditShortcutClick = (value:string)=>{
         switch(value){
@@ -48,16 +56,18 @@ const MenuDropdown = () => {
         }
         handleThreeDotsClick();
     }
+    console.log("showDropdownMenu", showDropdownMenu);
 
 
   return (
     <>
-    
-    {showSquareContainer && <BsThreeDotsVertical className={s["three-dots-icon"]} onClick = {handleThreeDotsClick}  />}                
+    <span className={s['option-label']}>
+      {showSquareContainer && <BsThreeDotsVertical className={s["three-dots-icon"]} onClick = {handleThreeDotsClick}  />}
+    </span>
 
     {/* Dropdown menu */}
 
-     {showDropdownMenu && (
+     {showDropdownMenu && showDropdownMenu[id] && (
         <div className={s["dropdown-menu"]} ref={dropdownRef}>
             <div className={s["dropdown-item"]} onClick={()=>handleEditShortcutClick('Refresh')}>Refresh</div>
             <div className={s["dropdown-item"]} onClick={()=>handleEditShortcutClick('ImageFormat')}>Image Format</div>
@@ -70,6 +80,6 @@ const MenuDropdown = () => {
 
     </>
   )
-}
+})
 
 export default MenuDropdown

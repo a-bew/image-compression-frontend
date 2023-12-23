@@ -8,11 +8,11 @@ import IntroSection from './components/landing/IntroSection'
 import { VITE_APP_DEBUG } from './api/secrets'
 
 if (!VITE_APP_DEBUG) {
-  console.log = () => { };
-  console.info = () => { };
-  console.warn = () => { };
-  console.error = () => { };
-  console.debug = () => { };
+  // console.log = () => { };
+  // console.info = () => { };
+  // console.warn = () => { };
+  // console.error = () => { };
+  // console.debug = () => { };
 }
 
 // IntroSection.tsx

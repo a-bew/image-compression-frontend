@@ -7,7 +7,7 @@ interface NavbarProps {
   title: string;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ title }) => {
+const Navbar: React.FC<NavbarProps> = React.memo(({ title }) => {
 
   const [showNav, setShowNav] = useState(false);
 
@@ -35,6 +35,6 @@ const Navbar: React.FC<NavbarProps> = ({ title }) => {
       </ul>
     </nav>
   );
-};
+});
 
 export default Navbar;

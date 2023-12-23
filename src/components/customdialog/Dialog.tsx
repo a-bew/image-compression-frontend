@@ -8,7 +8,7 @@ interface DialogProps {
   children: ReactNode;
 }
 
-const Dialog: React.FC<DialogProps> = ({ isOpen, onClose, children }) => {
+const Dialog: React.FC<DialogProps> = React.memo(({ isOpen, onClose, children }) => {
 
   const handleClick = useCallback((event: any) => {
     if (event.target.className === 'dialog_dialog-overlay__PnSDC') {
@@ -41,6 +41,6 @@ useEffect(() => {
       </div>
     </div>
   );
-};
+});
 
 export default Dialog;

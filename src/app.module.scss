@@ -10,13 +10,14 @@
   flex-direction: column;
 }
 
-.filesupload, fileslist{
+.filesupload{
   display: flex;
   flex:1;
   position: relative;
   width: 90%;
   margin: 0 auto;
-  
+  flex-direction: column;
+  gap: 20px;
 }
 
 
@@ -46,26 +47,93 @@
   }
 }
 
-.feature-metrics{
-  position: absolute;
-  bottom: -20px;
-  left: 0;
-  display: flex;
-  gap: 5px;
-  font-size: 10px;
-}
+// .feature-metrics{
+//   position: absolute;
+//   bottom: -20px;
+//   left: 0;
+//   display: flex;
+//   gap: 5px;
+//   font-size: 10px;
+// }
 
-  // Horizontal line
-  .vertical-bottom-line{
-    border-left: 0.5px solid #dadce0;
-  }
+//   // Horizontal line
+//   .vertical-bottom-line{
+//     border-left: 0.5px solid #dadce0;
+//   }
   
 
-  .label-style{
-    color: #007BFF;
+//   .label-style{
+//     color: #007BFF;
+//   }
+
+
+// .feature-metrics > span{
+//   cursor: pointer;
+// }
+
+.feature-metrics {
+  // position: absolute;
+  // bottom: -20px;
+  // left: 0;
+  display: flex;
+  justify-content: space-around;
+  // grid-template-rows: repeat(auto-fit, max(100px, 1fr)); /* Responsive grid layout with rows */
+  // gap: 10px;
+  
+  font-size: 14px;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+.feature-card {
+  text-align: center;
+  // margin: 1rem;
+  flex: 1;
+  min-width: 300px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  flex-shrink: 0;
+  min-width: 40px;
+  margin-bottom: 10px;
+  &:nth-child(even){
+    margin-right: 10px;
+  }
+  // width: 150px;
+  // max-width: 300px;
+  @media (max-width: 1100px) {
+    flex: none;
+
   }
 
+  @media (max-width: 700px) {
+    // flex: 1;
+    // flex-shrink: 0;
+      // width: 150px;
+      flex: 1;
+      flex-shrink: 0;
+      min-width: 120px;
+  
+      width: 100%;
 
-.feature-metrics > span{
+  }
+}
+
+.vertical-bottom-line {
+  border-top: 0.5px solid #dadce0;
+  margin-top: 5px;
+}
+
+.label-style {
+  color: #007BFF;
+}
+
+.feature-metrics > div {
   cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  /* Mobile styles */
+  .feature-metrics {
+    // grid-template-rows: repeat(auto-fit, minmax(80px, 1fr));
+  }
 }

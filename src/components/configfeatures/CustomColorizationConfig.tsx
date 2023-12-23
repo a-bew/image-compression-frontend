@@ -51,7 +51,7 @@ const CustomColorizationConfig: React.FC<CustomColorizationConfigProps> = ({
           />
           Grayscale
         </label>
-        <label>
+        {/* <label>
           <input
             type="radio"
             value="2color"
@@ -68,9 +68,11 @@ const CustomColorizationConfig: React.FC<CustomColorizationConfigProps> = ({
             onChange={handleColorizationChange}
           />
           3 Color
-        </label>
+        </label> */}
       </div>
       <div className = {s['submit-button-container']}>
+        <button className={s['button']} onClick={onClose}>Cancel</button>
+
         <button className={s['button']} onClick={onSubmit}>Submit</button>
       </div>
     </div>

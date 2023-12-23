@@ -3,12 +3,13 @@ import s from './app.module.scss'
 import FilesUpload  from './components/compressimage/FilesUpload'
 import TableRow from './components/compressimage/TableRow';
 import t from './components/compressimage/tablerow.module.scss';
-import { TimeProp } from './components/compressimage/Type'
+import { ShowDropdownMenuProp, TimeProp } from './components/compressimage/Type'
 import uuid from 'react-uuid'
 import { copyArrayOfObjects } from './utils';
 import FeatureConfigSection from './components/configfeatures/FeatureConfigSectionProps';
 import Dialog from './components/customdialog/Dialog';
 import { VITE_APP_BACKEND_URL } from './api/secrets';
+import React from 'react';
 
 interface FileListItem {
   id: string; 
@@ -28,7 +29,8 @@ interface CompressedImageProps {
   targetDivRef: React.RefObject<HTMLDivElement>;
 }
 
-const CompressImage: React.FC<CompressedImageProps> = ({ targetDivRef }) => {
+
+const CompressImage: React.FC<CompressedImageProps> = React.memo(({ targetDivRef }) => {
 
   const [timeLeft, setTimeLeft] = useState<TimeProp>({});
 
@@ -116,6 +118,7 @@ const CompressImage: React.FC<CompressedImageProps> = ({ targetDivRef }) => {
             downloadLinK: `${baseURL}/${filename}`,
             fileSize: `${cloned[i].fileSize} / ${(size ?? 0) / 1000000}MB`, // in mb            
           }
+
         }
 
         allFiles = [...fileListCloned, ...cloned];
@@ -135,7 +138,6 @@ const CompressImage: React.FC<CompressedImageProps> = ({ targetDivRef }) => {
 
   };
 
-  
   // State variables to hold configuration values
   const [imageFormat, setImageFormat] = useState<string>('jpeg');
   const [preserveAspectRatio, setPreserveAspectRatio] = useState<boolean>(false);
@@ -144,6 +146,7 @@ const CompressImage: React.FC<CompressedImageProps> = ({ targetDivRef }) => {
 
   const [quality, setQuality] = useState<number>(100);
   const [colorization, setColorization] = useState<string>('default');
+  const [showDropdownMenu, setShowDropdownMenu] = useState<ShowDropdownMenuProp>(null);
 
   const configDefaultValues = {
     imageFormat,
@@ -200,9 +203,13 @@ const CompressImage: React.FC<CompressedImageProps> = ({ targetDivRef }) => {
     <div className = {s.container} ref={targetDivRef}>
         <div className = {s['upload-home']}>
           <div className = {s['filesupload']} style = {{marginBottom: fileList.length > 0 ? '30px': 'inherit' }}>
-            <FilesUpload  onUpload={handleUpload} maxFileSize={512000000}  />
-            {/* <button onClick={openDialog}>Open Dialog</button> */}
-            <div className={s['feature-metrics']}>
+              <div style={{width: '100%'}}>
+              <FilesUpload  onUpload={handleUpload} maxFileSize={512000000}  />
+
+              </div>
+
+
+            {/* <div className={s['feature-metrics']}>
               <span onClick = {()=>featureChangeHandle('image-format')}>Image Format&nbsp;<span className={ s['label-style'] }>{imageFormat}</span></span>
               <div className={s["vertical-bottom-line"]}></div>
 
@@ -222,15 +229,37 @@ const CompressImage: React.FC<CompressedImageProps> = ({ targetDivRef }) => {
               <div className={s["vertical-bottom-line"]}></div>
 
               <span  onClick = {()=>featureChangeHandle('custom-color')}>Color&nbsp;<span className={ s['label-style'] }>{colorization}</span></span>
-            </div>
-
-            {/* <div className={s['feature-icons']}>
-              <FaRegFileImage size={18} />
-              <FaRulerCombined size={18}  />
-              <RxDimensions size={18}  />
-              <FaFileImage size={18}  />
-              <span>{`🌈`}</span>
             </div> */}
+<div className={s['feature-metrics']}>
+      <div className={s['feature-card']} onClick={() => featureChangeHandle('image-format')}>
+        Image Format <span className={s['label-style']}>{imageFormat}</span>
+      </div>
+      <div className={s['vertical-bottom-line']}></div>
+
+      <div className={s['feature-card']} onClick={() => featureChangeHandle('aspect-ratio')}>
+        Aspect Ratio <span className={s['label-style']}>{`${preserveAspectRatio}`}</span>
+      </div>
+      <div className={s['vertical-bottom-line']}></div>
+
+      <div className={s['feature-card']} onClick={() => featureChangeHandle('custom-dimension')}>
+        Width: <span className={s['label-style']}>{width}</span>
+      </div>
+      <div className={s['vertical-bottom-line']}></div>
+
+      <div className={s['feature-card']} onClick={() => featureChangeHandle('custom-dimension')}>
+        Height: <span className={s['label-style']}>{height}</span>
+      </div>
+      <div className={s['vertical-bottom-line']}></div>
+
+      <div className={s['feature-card']} onClick={() => featureChangeHandle('quality-optimization')}>
+        Quality <span className={s['label-style']}>{quality}</span>
+      </div>
+      <div className={s['vertical-bottom-line']}></div>
+
+      <div className={s['feature-card']} onClick={() => featureChangeHandle('custom-color')}>
+        Color <span className={s['label-style']}>{colorization}</span>
+      </div>
+    </div>            
           </div>
           <div>
             <div className={t['tag-tagtable']}>
@@ -264,7 +293,9 @@ const CompressImage: React.FC<CompressedImageProps> = ({ targetDivRef }) => {
                               fileSize: file.fileSize, // in mb
                               downloadLinK: file.downloadLinK,
                               timeLeft :timeLeft,
-                              setTimeLeft : setTimeLeft 
+                              setTimeLeft : setTimeLeft,
+                              showDropdownMenu: showDropdownMenu, 
+                              setShowDropdownMenu: setShowDropdownMenu
                             }}
                             
                             index={index} 
@@ -300,6 +331,6 @@ const CompressImage: React.FC<CompressedImageProps> = ({ targetDivRef }) => {
       </Dialog>
     </div>
   );
-}
+})
 
 export default CompressImage;

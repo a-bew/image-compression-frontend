@@ -71,6 +71,8 @@ const QualityOptimizationConfig: React.FC<QualityOptimizationConfigProps> = ({
         <span>{quality}%</span>
       </div>
       <div className = {s['submit-button-container']}>
+      <button className={s['button']} onClick={onClose}>Cancel</button>
+
         <button className={s['button']} onClick={onSubmit}>Submit</button>
       </div>
 

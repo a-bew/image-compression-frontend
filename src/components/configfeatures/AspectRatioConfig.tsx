@@ -54,7 +54,10 @@ const AspectRatioConfig: React.FC<AspectRatioConfigProps> = ({ onAspectRatioChan
           disabled={!preserveAspectRatio}
         />
       </div>
+
       <div className = {s['submit-button-container']}>
+        <button className={s['button']} onClick={onClose}>Cancel</button>
+
         <button className={s['button']} onClick={onSubmit}>Submit</button>
       </div>
 

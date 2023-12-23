@@ -59,6 +59,8 @@ const CustomDimensionsConfig: React.FC<CustomDimensionsConfigProps> = ({ onDimen
         />
       </div>
       <div className = {s['submit-button-container']}>
+        <button className={s['button']} onClick={onClose}>Cancel</button>
+
         <button className={s['button']} onClick={onSubmit}>Submit</button>
       </div>
     </div>

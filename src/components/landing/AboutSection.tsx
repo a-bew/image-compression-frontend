@@ -2,7 +2,7 @@
 import React from 'react';
 import s from './aboutsection.module.scss';
 
-const AboutSection: React.FC = () => {
+const AboutSection: React.FC = React.memo(() => {
   return (
     <section className={s["about-section"]}>
       <div className={s["about-content"]}>
@@ -27,6 +27,6 @@ const AboutSection: React.FC = () => {
       </div>
     </section>
   );
-};
+});
 
 export default AboutSection;

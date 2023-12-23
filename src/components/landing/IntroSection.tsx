@@ -1,3 +1,4 @@
+import React from 'react';
 import s from './introsection.module.scss';
 
 interface IntroSectionType {
@@ -5,7 +6,7 @@ interface IntroSectionType {
 }
 
 
-const IntroSection: React.FC<IntroSectionType> = ({scrollToDiv}) => {
+const IntroSection: React.FC<IntroSectionType> = React.memo(({scrollToDiv}) => {
     return (
       <section className={s["intro-section"]}>
         <div className={s["hero"]}>
@@ -31,7 +32,7 @@ const IntroSection: React.FC<IntroSectionType> = ({scrollToDiv}) => {
         {/* Your other content here */}
       </section>
     );
-  };
+  });
   
   export default IntroSection;
   

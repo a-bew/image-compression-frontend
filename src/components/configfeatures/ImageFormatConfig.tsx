@@ -55,6 +55,8 @@ const ImageFormatConfig: React.FC<ImageFormatConfigProps> = ({ onImageFormatChan
         WebP
       </label>
       <div className = {s['submit-button-container']}>
+        <button className={s['button']} onClick={onClose}>Cancel</button>
+
         <button className={s['button']} onClick={onSubmit}>Submit</button>
       </div>
     </div>

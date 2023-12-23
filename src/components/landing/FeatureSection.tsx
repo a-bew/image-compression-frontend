@@ -4,7 +4,7 @@ import { FaRegFileImage, FaRulerCombined, FaFileImage, FaCompress } from 'react-
 import s from './featuresection.module.scss';
 
 
-const FeatureSection: React.FC = () => {
+const FeatureSection: React.FC = React.memo(() => {
   return (
     <section className={s["feature-section"]}>
       <div className={s["feature"]}>
@@ -59,6 +59,6 @@ const FeatureSection: React.FC = () => {
       </div>
     </section>
   );
-};
+});
 
 export default FeatureSection;
