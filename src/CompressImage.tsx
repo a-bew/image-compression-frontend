@@ -203,7 +203,10 @@ const CompressImage: React.FC<CompressedImageProps> = React.memo(({ targetDivRef
     <div className = {s.container} ref={targetDivRef}>
         <div className = {s['upload-home']}>
           <div className = {s['filesupload']} style = {{marginBottom: fileList.length > 0 ? '30px': 'inherit' }}>
+          <h2 style={{textAlign: 'center'}}>Drop File To Upload</h2>
+
               <div style={{width: '100%'}}>
+
               <FilesUpload  onUpload={handleUpload} maxFileSize={512000000}  />
 
               </div>

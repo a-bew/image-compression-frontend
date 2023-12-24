@@ -17,12 +17,22 @@ const Navbar: React.FC<NavbarProps> = React.memo(({ title }) => {
 
   return (
     <nav className={s["navbar"]}>
-      <div className={s["navbar__title"]}><img src={One} />{title}</div>
-      <button className={s["navbar__toggle"]} onClick={handleNavToggle}>
-        <span><Hamburger/></span>
-        {/*  className={s["navbar__toggle-icon"]} */}
-      </button>
-      <ul className={`${s['navbar__list']} ${showNav ? s['navbar__list--show'] : ''}`}>
+      {<div className={s['nav-title-section']} style={{margin: (window.innerWidth <= 768 && !showNav) ? '1rem': ''}}>
+        <div className={s["navbar__title"]}><img src={One} />{title}</div>
+        <button className={s["navbar__toggle"]} onClick={handleNavToggle}>
+          <span><Hamburger/></span>
+          {/*  className={s["navbar__toggle-icon"]} */}
+        </button>
+
+      </div>}
+      <ul className={`${s['navbar__list']} ${showNav ? s['navbar__list--show'] : ''}`} style={{ position: (window.innerWidth <= 768 && !showNav) ? 'absolute': 'static' }}>
+      {window.innerWidth <= 768 && <div className={s['nav-title-section-second']} style={{padding: '20px 0'}}>
+        <div className={s["navbar__title"]}><img src={One} />{title}</div>
+         <button className={s["navbar__toggle"]} onClick={handleNavToggle}>
+          <span><Hamburger/></span>
+        </button> 
+
+      </div>}
         <li className={s["navbar__item"]}>
           <a href="#" className={s["navbar__link"]}>Home</a>
         </li>

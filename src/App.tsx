@@ -25,10 +25,17 @@ const App = () => {
   // Function to scroll to the target div
   const scrollToDiv = () => {
     if (targetDivRef.current) {
+      const pos = targetDivRef.current.style.position;
+      const top = targetDivRef.current.style.top;
+      targetDivRef.current.style.position = "relative";
+      targetDivRef.current.style.top = '-60px';
       targetDivRef.current.scrollIntoView({
         behavior: 'smooth', // Add smooth scrolling effect
         block: 'start',    // Scroll to the top of the div
       });
+      targetDivRef.current.style.top = top;
+      targetDivRef.current.style.position = pos;
+      
     }
   };
 

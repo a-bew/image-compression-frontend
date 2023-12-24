@@ -1,18 +1,31 @@
-.navbar {
+.navbar{
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #007BFF;
   color: #fff;
   padding: 1rem;
+  position: fixed;
+  z-index: 10;
+}
+
+ .nav-title-section {
+  display: flex;
+  justify-content: space-between;
+  background-color: #007BFF;
+  color: #fff;
+  width: 100%;
+
 }
 
 .navbar__title {
   font-size: 13px;
   font-weight: bold;
   display: flex;
-  justify-content: center;
+  width: 100%;
+  justify-content: left;
   gap: 5px;
+  padding-left: 20px;
 }
 
 .navbar__toggle {
@@ -50,14 +63,40 @@
 
 }
 
+.nav-title-section-second{
+  display: none;
+}
+
 @media screen and (max-width: 768px) {
-  .navbar__toggle {
+
+  .navbar{
+    padding: 0rem;
+    padding: 0px 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav-title-section-second{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    // padding: 20px;
+    align-items: center;
+  }
+
+  .navbar__title {
+    padding-left: 10px;
+  }
+
+  .navbar__toggle{
     display: block;
+    padding-right: 10px;
   }
 
   .navbar__list {
-    position: absolute;
-    top: 100%;
+    
+    top: 0%;
     left: 0;
     width: 100%;
     background-color: #333;
@@ -65,7 +104,8 @@
     flex-direction: column;
     align-items: center;
     transition: transform 0.3s ease-in-out;
-    transform: translateY(-100%);
+    transform: translateY(-200%);
+    margin-top: -20px;
   }
 
   .navbar__list--show {
@@ -73,6 +113,6 @@
   }
 
   .navbar__item {
-    margin: 0.5rem 0;
+    margin: 0rem 0 0.5rem 0;
   }
 }
