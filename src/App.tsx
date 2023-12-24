@@ -35,7 +35,6 @@ const App = () => {
       });
       targetDivRef.current.style.top = top;
       targetDivRef.current.style.position = pos;
-      
     }
   };
 
