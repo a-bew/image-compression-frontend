@@ -61,6 +61,13 @@ const FilesUpload: React.FC<FileUploadProps> = React.memo(({ onUpload, maxFileSi
 
 
   const handleFileSelect =async (e: React.ChangeEvent<HTMLInputElement>) => {
+    
+    if (filesUploadApiResponse.loading){
+      const errorMessage = 'File(s) are being processed. Please wait to complete';
+      showNotification(errorMessage, 'top-right');
+      return;
+    }
+    
     if (e.target.files && e.target.files.length > 0) {
      await onUpload(e.target.files);
     }
