@@ -1,0 +1,70 @@
+// Notification.module.scss
+
+.notification {
+    position: fixed;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 300px;
+    transition: opacity 0.3s ease-in-out;
+    z-index: 1000;
+    &.top-right {
+      top: 20px;
+      right: 20px;
+    }
+  
+    &.bottom-right {
+      bottom: 20px;
+      right: 20px;
+    }
+  
+    &.bottom-left {
+      bottom: 20px;
+      left: 20px;
+    }
+  
+    &.top-left {
+      top: 20px;
+      left: 20px;
+    }
+  
+    &.urgent {
+      // Add styles for 'urgent' notifications
+      background-color: #ffcccb; /* Light red background for urgent notifications */
+      border-color: #ff6347; /* Tomato border color for urgent notifications */
+      color: #050000; /* White text color for urgent notifications */
+    }
+
+  //   .message {
+  //     margin-right: 10px;
+  //   overflow: hidden; /* Prevents text overflow */
+  //   white-space: nowrap; /* Prevents line breaks */
+  //   text-overflow: ellipsis; /* Displays an ellipsis (...) to indicate text overflow */
+  //   word-break: break-all; /* Breaks long words and wraps onto the next line using hyphen (-) */
+  // }
+  .message {
+    margin-right: 10px;
+    overflow: hidden;
+    white-space: normal; /* Change to normal to allow multiple lines */
+    text-align: left; /* Align text to the left */
+    word-break: break-word;
+  }
+  
+    .closeButton {
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 12px;
+      color: #333;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      // padding: 10px;
+    }
+    
+  }
+  

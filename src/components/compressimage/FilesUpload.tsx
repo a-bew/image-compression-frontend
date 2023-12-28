@@ -1,5 +1,7 @@
 import React, { useRef } from "react";
 import s from "./filesupload.module.scss";
+import useFileApiResponse from "../../hooks/useFileApiResponseSelector";
+import useNotification from "../../hooks/useNotification";
 
 interface FileUploadProps {
   onUpload: (files: FileList) => void;
@@ -7,27 +9,51 @@ interface FileUploadProps {
 }
 
 const FilesUpload: React.FC<FileUploadProps> = React.memo(({ onUpload, maxFileSize }) => {
-  
+
+  const {  showNotification } = useNotification();
+
+  const { filesUploadApiResponse } = useFileApiResponse()
+
+    // console.log("filesUploadApiResponse", filesUploadApiResponse)
   const dragAreaRef = useRef<HTMLDivElement>(null);
 
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
+
+    if (filesUploadApiResponse.loading){
+      return;
+    }
+
     if (dragAreaRef.current) {
       dragAreaRef.current.classList.add(s['drag-over']);
     }
+
+  
   };
 
   const handleDragLeave = () => {
+    if (filesUploadApiResponse.loading){
+      return;
+    }
+
     if (dragAreaRef.current) {
       dragAreaRef.current.classList.remove(s['drag-over']);
     }
   };
 
-  const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {  
     event.preventDefault();
+
+    if (filesUploadApiResponse.loading){
+      const errorMessage = 'File(s) are being processed. Please wait to complete';
+      showNotification(errorMessage, 'top-right');
+      return;
+    }
+
     if (event.dataTransfer.files.length > 0) {
       await onUpload(event.dataTransfer.files);
     }
+
     if (dragAreaRef.current) {
       dragAreaRef.current.classList.remove(s['drag-over']);
     }

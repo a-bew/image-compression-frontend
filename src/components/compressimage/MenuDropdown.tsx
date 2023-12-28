@@ -56,7 +56,7 @@ const MenuDropdown = React.memo(({item: { showDropdownMenu, setShowDropdownMenu,
         }
         handleThreeDotsClick();
     }
-    console.log("showDropdownMenu", showDropdownMenu);
+    // console.log("showDropdownMenu", showDropdownMenu);
 
 
   return (

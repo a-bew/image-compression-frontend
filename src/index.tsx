@@ -1,22 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorPage from './components/pages/ErrorPage';
+import store from './redux/store';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-      <ErrorBoundary 
-    FallbackComponent={ErrorPage}
-    onReset={() => (window.location.href = '/')}      
-          >
-        <App />
-      </ErrorBoundary>
+      <Provider store={store}>
+        <ErrorBoundary 
+          FallbackComponent={ErrorPage}
+          onReset={() => (window.location.href = '/')}      
+        >
+          <App />
+        </ErrorBoundary>
+      </Provider>
+
   </React.StrictMode>
 );
 

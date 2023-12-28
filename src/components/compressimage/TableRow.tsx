@@ -1,25 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import DownloadButton from './DownloadButton';
+import React, {  useState } from 'react';
 import { TableRowProps } from './Type'
-import RoundedLoader from './RoundedLoader';
-import useCountdown from './useCountdown';
-import { FcDeleteDatabase } from 'react-icons/fc';
 import MenuDropdown from './MenuDropdown';
 import s from './tablerow.module.scss';
 import DownloadLink from './DownloadLink';
 
 const TableRow: React.FC<TableRowProps> = React.memo(({ item, index }) => {
   
-
   const isEvenRow = index % 2 === 0;
   const [isHovered, setIsHovered] = useState(false)
-
-
-
 
   return (
 
     <tr 
+
         style={{ background: isEvenRow ? '#fff' : '#f2f2f2' }}
         onMouseEnter = {()=>setIsHovered(true)} 
         onMouseLeave = {()=>setIsHovered(false)} 
@@ -49,6 +42,5 @@ const TableRow: React.FC<TableRowProps> = React.memo(({ item, index }) => {
     </tr> 
   );
 });
-
 
 export default TableRow;
