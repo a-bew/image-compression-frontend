@@ -13,6 +13,7 @@ const FilesUpload: React.FC<FileUploadProps> = React.memo(({ onUpload, maxFileSi
   const {  showNotification } = useNotification();
 
   const { filesUploadApiResponse } = useFileApiResponse()
+  const errorMessage = 'File(s) are being processed. Please wait to complete';
 
     // console.log("filesUploadApiResponse", filesUploadApiResponse)
   const dragAreaRef = useRef<HTMLDivElement>(null);
@@ -21,10 +22,12 @@ const FilesUpload: React.FC<FileUploadProps> = React.memo(({ onUpload, maxFileSi
     event.preventDefault();
 
     if (filesUploadApiResponse.loading){
+      showNotification(errorMessage, 'top-right', 'urgent');
       return;
     }
 
     if (dragAreaRef.current) {
+      
       dragAreaRef.current.classList.add(s['drag-over']);
     }
 
@@ -33,6 +36,7 @@ const FilesUpload: React.FC<FileUploadProps> = React.memo(({ onUpload, maxFileSi
 
   const handleDragLeave = () => {
     if (filesUploadApiResponse.loading){
+      showNotification(errorMessage, 'top-right', 'urgent');
       return;
     }
 
@@ -45,8 +49,7 @@ const FilesUpload: React.FC<FileUploadProps> = React.memo(({ onUpload, maxFileSi
     event.preventDefault();
 
     if (filesUploadApiResponse.loading){
-      const errorMessage = 'File(s) are being processed. Please wait to complete';
-      showNotification(errorMessage, 'top-right');
+      showNotification(errorMessage, 'top-right', 'urgent');
       return;
     }
 
@@ -63,8 +66,7 @@ const FilesUpload: React.FC<FileUploadProps> = React.memo(({ onUpload, maxFileSi
   const handleFileSelect =async (e: React.ChangeEvent<HTMLInputElement>) => {
     
     if (filesUploadApiResponse.loading){
-      const errorMessage = 'File(s) are being processed. Please wait to complete';
-      showNotification(errorMessage, 'top-right');
+      showNotification(errorMessage, 'top-right', 'urgent');
       return;
     }
     
