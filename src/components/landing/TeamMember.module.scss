@@ -1,0 +1,41 @@
+/* TeamMember.module.scss */
+
+.avatar {
+    width: 5rem; /* Set width to a percentage of the container */
+    max-width: 200px; /* Set a maximum width to prevent the avatar from becoming too large */
+    height: 5rem; /* Let the height adjust automatically to maintain aspect ratio */
+    border-radius: 50%; /* Make the avatar image round */
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 6vw; /* Adjust font size using vw units for responsiveness */
+    background-color: white; /* Add a background color for the initials */
+    color: black; /* Set text color to black for better visibility */
+  }
+  
+  /* Adjust font size and other styles as needed for different screen sizes */
+  @media (min-width: 768px) {
+    .avatar {
+      font-size: 24px;
+    }
+  }
+  
+  .teamMember {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .details {
+    text-align: center;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .details span:first-child{
+    font-weight: bold;
+  }
+  
