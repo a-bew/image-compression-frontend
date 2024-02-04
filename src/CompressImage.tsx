@@ -87,12 +87,15 @@ const CompressImage: React.FC<CompressedImageProps> = React.memo(({ targetDivRef
     try {
       // showNotification("Test notification Test notification Test notification Test notification Test notification Test notification Test notification Test notification Test notification Test notification Test notification Test notification Test notification Test notification Test notification Test notification Test notification Test notification ", 'top-right', 'urgent')
       const params = new URLSearchParams();
+
       params.append('quality', quality.toString());
       params.append('imageFormat', imageFormat);
       params.append('width', width.toString());
       params.append('height', height.toString());
       params.append('color', colorization);
       params.append('aspect', preserveAspectRatio.toString());
+      params.append('blurRatio', blurRatio.toString());
+      params.append('completeBlur', completeBlur.toString());
   
       setApiResponseAsync({ loading: true, error: null, data: null });
 
@@ -171,6 +174,9 @@ const CompressImage: React.FC<CompressedImageProps> = React.memo(({ targetDivRef
 
   const [quality, setQuality] = useState<number>(100);
   const [colorization, setColorization] = useState<string>('default');
+  const [blurRatio, setBlurRatio] = useState<number>(0);
+  const [completeBlur, setCompleteBlur] = useState(false);
+
   const [showDropdownMenu, setShowDropdownMenu] = useState<ShowDropdownMenuProp>(null);
 
   const configDefaultValues = {
@@ -179,7 +185,9 @@ const CompressImage: React.FC<CompressedImageProps> = React.memo(({ targetDivRef
     width,
     height,
     quality,
-    colorization
+    colorization,
+    blurRatio,
+    completeBlur
   };
 
   // Event handlers for configuration changes
@@ -203,10 +211,15 @@ const CompressImage: React.FC<CompressedImageProps> = React.memo(({ targetDivRef
     setQuality(newQuality);
   };
 
-  const handleColorizationChange = (color: string) => {
+  const handleColorizationChange = (color: string,) => {
     setColorization(color);
   };
 
+
+  const handleBlurImageChange = (ratio: number, completeBlur: boolean) => {
+    setBlurRatio(ratio);
+    setCompleteBlur(completeBlur);
+  };
   const [isDialogOpen, setDialogOpen] = useState(false);
 
   const openDialog = () => {
@@ -265,6 +278,11 @@ const CompressImage: React.FC<CompressedImageProps> = React.memo(({ targetDivRef
       <div className={s['feature-card']} onClick={() => featureChangeHandle('custom-color')}>
         Color <span className={s['label-style']}>{colorization}</span>
       </div>
+
+      <div className={s['feature-card']} onClick={() => featureChangeHandle('blur-image')}>
+        Blur Image <span className={s['label-style']}>{completeBlur ? 'Complete' : blurRatio}</span>
+      </div>
+
     </div>            
           </div>
             <Table fileList={fileList} timeLeft={timeLeft} setTimeLeft={setTimeLeft} showDropdownMenu={showDropdownMenu} setShowDropdownMenu={setShowDropdownMenu} />
@@ -281,6 +299,7 @@ const CompressImage: React.FC<CompressedImageProps> = React.memo(({ targetDivRef
           onDimensionsChange={handleDimensionsChange}
           onQualityChange={handleQualityChange}
           onColorizationChange={handleColorizationChange}
+          onBlurImageChange = {handleBlurImageChange}
         />
       </Dialog>
     </div>

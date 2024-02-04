@@ -5,6 +5,7 @@ import CustomDimensionsConfig from './CustomDimensionsConfig';
 import QualityOptimizationConfig from './QualityOptimizationConfig';
 import CustomColorizationConfig from './CustomColorizationConfig';
 import s from './featureconfigsection.module.scss';
+import BlurRatioConfig from './BlurRatioConfig';
 
 export type FeatureConfigProp =  {
   imageFormat: string;
@@ -13,6 +14,8 @@ export type FeatureConfigProp =  {
   height: number;
   quality: number;
   colorization: string;
+  blurRatio: number;
+  completeBlur: boolean;
 };
 
 interface FeatureConfigSectionProps {
@@ -21,10 +24,11 @@ interface FeatureConfigSectionProps {
   onDimensionsChange: (width: number, height: number) => void;
   onQualityChange: (isLossless: boolean, quality: number) => void;
   onColorizationChange: (colorization: string) => void;
+  onBlurImageChange: (blurRatio: number, completeBlur: boolean) => void;
   featureName: string;
   setFeatureName: Dispatch<SetStateAction<string>>;
   onClose: () => void;
-  configDefaultValues: FeatureConfigProp
+  configDefaultValues: FeatureConfigProp;
 }
 
 
@@ -34,6 +38,7 @@ const FeatureConfigSection: React.FC<FeatureConfigSectionProps> = React.memo(({
   onDimensionsChange,
   onQualityChange,
   onColorizationChange,
+  onBlurImageChange,
   featureName,
   setFeatureName,
   onClose,
@@ -77,6 +82,14 @@ const FeatureConfigSection: React.FC<FeatureConfigSectionProps> = React.memo(({
           onClose =  {onClose}
           configDefaultValue = { configDefaultValues.colorization }
       />)
+
+      case 'blur-image':
+        return (<BlurRatioConfig 
+          onBlurImageChange={onBlurImageChange} 
+          onClose =  {onClose}
+          configDefaultValues = { configDefaultValues }
+
+        />)
   
       default:
         return null;

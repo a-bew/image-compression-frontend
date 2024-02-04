@@ -13,9 +13,9 @@ const FilesUpload: React.FC<FileUploadProps> = React.memo(({ onUpload, maxFileSi
   const {  showNotification } = useNotification();
 
   const { filesUploadApiResponse } = useFileApiResponse()
+
   const errorMessage = 'File(s) are being processed. Please wait to complete';
 
-    // console.log("filesUploadApiResponse", filesUploadApiResponse)
   const dragAreaRef = useRef<HTMLDivElement>(null);
 
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -26,11 +26,9 @@ const FilesUpload: React.FC<FileUploadProps> = React.memo(({ onUpload, maxFileSi
       return;
     }
 
-    if (dragAreaRef.current) {
-      
+    if (dragAreaRef.current) {      
       dragAreaRef.current.classList.add(s['drag-over']);
     }
-
   
   };
 
