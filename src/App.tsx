@@ -9,11 +9,11 @@ import SideNotification from './components/sidenotification/SideNotification'
 import useNotification from './hooks/useNotification'
 
 if (!VITE_APP_DEBUG) {
-  // console.log = () => { };
-  // console.info = () => { };
-  // console.warn = () => { };
-  // console.error = () => { };
-  // console.debug = () => { };
+  console.log = () => { };
+  console.info = () => { };
+  console.warn = () => { };
+  console.error = () => { };
+  console.debug = () => { };
 }
 
 // IntroSection.tsx
