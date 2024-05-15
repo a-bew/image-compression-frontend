@@ -1,0 +1,148 @@
+tr .tag-tagtable-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+
+.tag-tagtable-header {
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: 0px;
+  display: flex;
+  box-sizing: border-box;
+  cursor: pointer;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 50px;
+
+  @media screen and (max-width: 600px) {
+    padding-right: 20px;
+
+  }
+
+  @media screen and (max-width: 400px) {
+    padding-right: 10px;
+
+  }
+}
+
+
+.tag-tagtable-header-main {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.tag-tagtable-header-checkbox {
+  text-align: left;
+  padding: 5px;
+}
+
+.tag-tagtable-header-icons-container {
+  margin: 10px;
+  margin-top: 5px;
+  align-items: flex-end;
+  display: flex;
+}
+
+.tag-tagtable-body-content {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  padding-left: 10px;
+  border-radius: 0px;
+}
+
+.tag-tagtable-form {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.tag-tagtable-inputGroup {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+
+  padding: 5px 0px 10px 0px;
+
+  &:first-child {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  &:last-child {
+    padding-bottom: 20px;
+  }
+}
+
+.tag-tagtable-label {
+  width: 150px;
+  text-align: left;
+  padding-bottom: 5px;
+  font-size: 12px;
+}
+
+.tag-tagtable-input {
+  width: 70%;
+
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-size: 12px;
+}
+
+
+.code-snippet {
+  width: 92%;
+  min-height: 100px; /* Adjust height as needed */
+  padding: 10px;
+  font-family: 'Courier New', Courier, monospace;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical; /* Allow vertical resizing */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+
+.img-container {
+  position: relative;
+  width: 40px; /* Set the desired width */
+}
+
+.img-container img {
+  width: 100%;
+  height: auto;
+}
+
+.source-set-description{
+  padding: 0 40px;
+  @media screen and (max-width: 600px) {
+    padding: 0 10px;
+  }
+}
+
+.copy-icon {
+  cursor: pointer;
+  display: inline-block;
+  margin-left: 8px; /* Adjust spacing as needed */
+  transition: transform 0.2s ease-in-out; /* Example animation */
+
+  /* Optional hover effect */
+  &:hover {
+    transform: scale(1.1); /* Example scale on hover */
+  }
+}
+
+
+.copy-icon.copied {
+  background-color: lightblue; /* Example background color */
+  border: 1px solid #007BFF; /* Example border */
+}

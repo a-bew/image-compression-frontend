@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 
 type IntersectionObserverCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => void;
 
+// viewport visibility trigger based 
 const useIntersectionObserver = (onIntersect: IntersectionObserverCallback) => {
   const elementRef = useRef<HTMLDivElement>(null);
 

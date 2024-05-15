@@ -6,6 +6,8 @@ import QualityOptimizationConfig from './QualityOptimizationConfig';
 import CustomColorizationConfig from './CustomColorizationConfig';
 import s from './featureconfigsection.module.scss';
 import BlurRatioConfig from './BlurRatioConfig';
+import SrcSetConfigConfig, { SourceSet, SrcSetOptionType } from './SrcSetConfig';
+import SrcSetConfig from './SrcSetConfig';
 
 export type FeatureConfigProp =  {
   imageFormat: string;
@@ -25,6 +27,7 @@ interface FeatureConfigSectionProps {
   onQualityChange: (isLossless: boolean, quality: number) => void;
   onColorizationChange: (colorization: string) => void;
   onBlurImageChange: (blurRatio: number, completeBlur: boolean) => void;
+  onSrcSetImageChange: (sourceSetOption: SrcSetOptionType, sourceSets: SourceSet[]) => void
   featureName: string;
   setFeatureName: Dispatch<SetStateAction<string>>;
   onClose: () => void;
@@ -39,6 +42,7 @@ const FeatureConfigSection: React.FC<FeatureConfigSectionProps> = React.memo(({
   onQualityChange,
   onColorizationChange,
   onBlurImageChange,
+  onSrcSetImageChange,
   featureName,
   setFeatureName,
   onClose,
@@ -90,7 +94,15 @@ const FeatureConfigSection: React.FC<FeatureConfigSectionProps> = React.memo(({
           configDefaultValues = { configDefaultValues }
 
         />)
+
+        case 'srcset-image':
+          return (<SrcSetConfig 
+            onSrcSetImageChange={onSrcSetImageChange} 
+            onClose =  {onClose}
+            configDefaultValues = { configDefaultValues }
   
+          />)
+        // 
       default:
         return null;
     }

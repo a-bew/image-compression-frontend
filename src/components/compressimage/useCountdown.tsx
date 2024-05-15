@@ -1,4 +1,4 @@
-import {  useEffect, useState } from 'react';
+import {  memo, useEffect, useState } from 'react';
 import { TimeProp } from './Type';
 
 interface UseCountDownProps{
@@ -24,7 +24,7 @@ const useCountdown = ({id, timeLeft,setTimeLeft}:UseCountDownProps) => {
       });
     }, 1000);
     return () => clearInterval(intervalId);
-  }, []);
+  }, [id, setTimeLeft]); // Ensure dependencies are specified correctly
 
   const minutesLeft = Math.floor(timeLeft[id] / 60);
   const secondsLeft = timeLeft[id] % 60;

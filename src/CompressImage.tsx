@@ -13,6 +13,7 @@ import { VITE_APP_BACKEND_URL } from './api/secrets';
 import useNotification from './hooks/useNotification';
 import useFileApiResponseDispatch from './hooks/useFileApiResponseDispatch';
 import Table from './components/compressimage/Table';
+import { SrcSetOptionType, SourceSet } from './components/configfeatures/SrcSetConfig';
 
 interface FileListItem {
   id: string; 
@@ -96,7 +97,9 @@ const CompressImage: React.FC<CompressedImageProps> = React.memo(({ targetDivRef
       params.append('aspect', preserveAspectRatio.toString());
       params.append('blurRatio', blurRatio.toString());
       params.append('completeBlur', completeBlur.toString());
-  
+      params.append('sourceSetOption', sourceSetOption);
+      params.append('sourceSets', JSON.stringify(sourceSets));
+
       setApiResponseAsync({ loading: true, error: null, data: null });
 
       const url = `${baseURL}/upload/manipulate-images?${params.toString()}`;
@@ -110,46 +113,119 @@ const CompressImage: React.FC<CompressedImageProps> = React.memo(({ targetDivRef
         throw new Error('Failed to upload');
       }
 
-      const data = await response.json();
-
-
       // Handle the response data here
-  
       const cloned:any = copyArrayOfObjects(stored);
       const timenow: any = {}
+      
+      const data = await response.json();
+
+      const willZipImages = data.willZipImages;
+
+      if (willZipImages) {
+
+        setSourceSetOption('none');
+        setSourceSets([{ size: '', width: 0 }]);
+  
+        type OrderedObject = {};
+
+        const groupedByFileName: any = [];
+  
+        data.files.forEach((file: any) => {
+          const filename = file.compressedFile.split('/').pop();
+
+          // Find the index of the entry in the ordered object array
+          const index = groupedByFileName.findIndex((entry:any) => entry[0] === file.fileName);
+          const size =  file.size;
+
+          const updating =  {
+            fileName: file.fileName,
+            compressedFile: `${baseURL}/${filename}`, 
+            downloadLinK: `${baseURL}/${filename}`,
+            fileSize: `${cloned[0].fileSize} / ${(size ?? 0) / 1000000}MB`, // in mb  
+          }
+
+          if (index !== -1) {
+            // If the fileName already exists, append the file to the existing array of files
+            groupedByFileName[index][1].push({...file, ...updating});
+          } else {
+            // If the fileName doesn't exist, add a new entry to the ordered object
+            groupedByFileName.push([file.fileName, [{...file, ...updating}]]);
+          }
+        });
+
+        console.log("groupedByFileName", groupedByFileName)
+
+            //   const {
+            //     width,
+            //     height,
+            //     fileName:originalFileName,
+            //     compressedFile,
+            // }
+
+          for (let i = 0; i < cloned.length; i++) {
+
+            const trackedId = processingIdss[i];
+  
+            // const returnedIndex =  processingIdss.findIndex((id=>{
+            //   return id ===  trackedId
+            // }));
+            const returnedIndex = processingIdss.indexOf(trackedId);
+
+  
+            const size =  data.files[returnedIndex].size;
+    
+            const minutes = 4; 
+            const seconds = 60
+        
+              // const filename = data.files[returnedIndex].compressedFile.split('/').pop();
+              const filename =  groupedByFileName[returnedIndex][1][0].compressedFile.split('/').pop();
+              const sizeInter =  groupedByFileName[returnedIndex][1][0].size;
+
+              timenow[processingIdss[returnedIndex]] = minutes * 60 + seconds;
+                cloned[returnedIndex] = {
+                  ...cloned[returnedIndex], 
+                  compressedFile: `${baseURL}/${filename}`, 
+                  downloadLinK: `${baseURL}/${filename}`,
+                  fileSize: `${cloned[i].fileSize} / ${(sizeInter ?? 0) / 1000000}MB`, // in mb   
+                  zipped: groupedByFileName[returnedIndex][1],
+                }
+              }
+
+          } else {
 
         for (let i = 0; i < cloned.length; i++) {
 
           const trackedId = processingIdss[i];
 
-          const returnedIndex =  processingIdss.findIndex((id=>{
-            return id ===  trackedId
-          }));
-    
+          // const returnedIndex =  processingIdss.findIndex((id=>{
+          //   return id ===  trackedId
+          // }));
+          const returnedIndex = processingIdss.indexOf(trackedId);
+
           const size =  data.files[returnedIndex].size;
   
           const minutes = 4; 
           const seconds = 60
+      
+            const filename = data.files[returnedIndex].compressedFile.split('/').pop();
 
-          const filename = data.files[returnedIndex].compressedFile.split('/').pop();
+            timenow[processingIdss[returnedIndex]] = minutes * 60 + seconds;
+                cloned[returnedIndex] = {
+                  ...cloned[returnedIndex], 
+                  compressedFile: `${baseURL}/${filename}`, 
+                  downloadLinK: `${baseURL}/${filename}`,
+                  fileSize: `${cloned[i].fileSize} / ${(size ?? 0) / 1000000}MB`, // in mb  
+                }
+          }
+      }
 
-          timenow[processingIdss[returnedIndex]] = minutes * 60 + seconds;
-              cloned[returnedIndex] = {
-                ...cloned[returnedIndex], 
-                compressedFile: `${baseURL}/${filename}`, 
-                downloadLinK: `${baseURL}/${filename}`,
-                fileSize: `${cloned[i].fileSize} / ${(size ?? 0) / 1000000}MB`, // in mb            
-              }
+      allFiles = [...fileListCloned, ...cloned];
 
-            }
+      await setTimeLeft({...timeLeft, ...timenow});
 
-          allFiles = [...fileListCloned, ...cloned];
+      setFileList(allFiles);  
 
-          await setTimeLeft({...timeLeft, ...timenow});
-
-          setFileList(allFiles);  
-
-          setApiResponseAsync({ loading: false, error: null, data: null });
+      setApiResponseAsync({ loading: false, error: null, data: null });
 
     } catch (error:any) {
 
@@ -158,6 +234,9 @@ const CompressImage: React.FC<CompressedImageProps> = React.memo(({ targetDivRef
       setApiResponseAsync({ loading: false, error: errorMessage, data: null })
 
       showNotification(errorMessage, 'top-right', 'urgent')
+
+      setSourceSetOption('none');
+      setSourceSets([{ size: '', width: 0 }]);
 
       // Handle the error here
       console.error(error);
@@ -176,6 +255,8 @@ const CompressImage: React.FC<CompressedImageProps> = React.memo(({ targetDivRef
   const [colorization, setColorization] = useState<string>('default');
   const [blurRatio, setBlurRatio] = useState<number>(0);
   const [completeBlur, setCompleteBlur] = useState(false);
+  const [sourceSetOption, setSourceSetOption] = useState<SrcSetOptionType>('none');
+  const [sourceSets, setSourceSets] = useState<SourceSet[]>([{ size: '', width: 0 }]);
 
   const [showDropdownMenu, setShowDropdownMenu] = useState<ShowDropdownMenuProp>(null);
 
@@ -220,6 +301,13 @@ const CompressImage: React.FC<CompressedImageProps> = React.memo(({ targetDivRef
     setBlurRatio(ratio);
     setCompleteBlur(completeBlur);
   };
+
+  const handleSrcSetImageChange = (sourceSetOption: SrcSetOptionType, sourceSets: SourceSet[]) => {
+    // Handle the sourceSetOption and sourceSets changes here
+    setSourceSetOption(sourceSetOption);
+    setSourceSets(sourceSets);
+      
+  }
   const [isDialogOpen, setDialogOpen] = useState(false);
 
   const openDialog = () => {
@@ -283,6 +371,10 @@ const CompressImage: React.FC<CompressedImageProps> = React.memo(({ targetDivRef
         Blur Image <span className={s['label-style']}>{completeBlur ? 'Complete' : blurRatio}</span>
       </div>
 
+      <div className={s['feature-card']} onClick={() => featureChangeHandle('srcset-image')}>
+        SrcSet <span className={s['label-style']}>{sourceSetOption}</span>
+      </div>
+
     </div>            
           </div>
             <Table fileList={fileList} timeLeft={timeLeft} setTimeLeft={setTimeLeft} showDropdownMenu={showDropdownMenu} setShowDropdownMenu={setShowDropdownMenu} />
@@ -290,17 +382,17 @@ const CompressImage: React.FC<CompressedImageProps> = React.memo(({ targetDivRef
 
       <Dialog isOpen={isDialogOpen} onClose={closeDialog}>
         <FeatureConfigSection
-          configDefaultValues = { configDefaultValues }
+          configDefaultValues={configDefaultValues}
           onClose={closeDialog}
-          featureName = {featureName}
-          setFeatureName = {setFeatureName}
+          featureName={featureName}
+          setFeatureName={setFeatureName}
           onImageFormatChange={handleImageFormatChange}
           onAspectRatioChange={handleAspectRatioChange}
           onDimensionsChange={handleDimensionsChange}
           onQualityChange={handleQualityChange}
           onColorizationChange={handleColorizationChange}
-          onBlurImageChange = {handleBlurImageChange}
-        />
+          onBlurImageChange={handleBlurImageChange} 
+          onSrcSetImageChange={handleSrcSetImageChange}        />
       </Dialog>
     </div>
   );

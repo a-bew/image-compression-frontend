@@ -3,6 +3,7 @@ import TableRow from './TableRow';
 import uuid from 'react-uuid';
 import t from './tablerow.module.scss';
 import useIntersectionObserver from '../../hooks/useIntersectionObserver';
+import ZipRowItem from './ZipRowItem';
 
 interface TableProps {
     fileList: any
@@ -62,7 +63,7 @@ const Table = ({fileList, timeLeft, setTimeLeft, showDropdownMenu, setShowDropdo
                       if (file) {
                         // use the url
                         return (
-                          <TableRow
+                         !file.zipped?<TableRow
                             key={uuid()}
                             item={{
                               id: file.id,
@@ -77,7 +78,14 @@ const Table = ({fileList, timeLeft, setTimeLeft, showDropdownMenu, setShowDropdo
                             }}
                             
                             index={index} 
-                          />
+                          />: 
+                          <ZipRowItem  item = {{
+                            ...file,
+                            timeLeft :timeLeft,
+                            setTimeLeft : setTimeLeft,
+                            showDropdownMenu: showDropdownMenu, 
+                            setShowDropdownMenu: setShowDropdownMenu
+                          }} index = {index} isChecked = {false} onToggle = {() => {}}  />
                         );
                       } else {
                         // handle the case when file is null
@@ -87,9 +95,10 @@ const Table = ({fileList, timeLeft, setTimeLeft, showDropdownMenu, setShowDropdo
                     })
                   }
                 </tbody>
-                {loadedRows < fileList.length && <div ref={intersectionObserverRef}></div>}
 
               </table>
+              {loadedRows < fileList.length && <div ref={intersectionObserverRef}></div>}
+
             </div>
 
             </div>

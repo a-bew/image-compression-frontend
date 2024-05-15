@@ -16,19 +16,8 @@ const AboutSection: React.FC = React.memo(() => {
       <h2>Meet Our Team</h2>
 
       <div className={s["team-content"]}>
-        {/* <div className={s["team-member"]}>
-          <img src="team-member-1.jpg" alt="Team Member 1" />
-          <p>John Doe</p>
-          <p>Lead Developer</p>
-        </div> */}
         <TeamMember name={'Adetola Bewaji'} role={'Lead Developer'} />
         <TeamMember name={'Muhammad Bello'} role={'Designer'} />
-
-        {/* <div className={s["team-member"]}>
-          <img src="team-member-2.jpg" alt="Team Member 2" />
-          <p>Jane Smith</p>
-          <p>Designer</p>
-        </div> */}
         {/* Add more team members */}
       </div>
     </section>

@@ -14,15 +14,16 @@
  
 }
 
+
 .tag-tagtable th,
 .tag-tagtable td {
   text-align: center;
-
-  padding: 8px;
-//  border-bottom: 1px solid #ddd;
-  //line-height: 15px;
-  //letter-spacing:0.02em;
+  
   flex: 1;
+}
+
+.tag-tagtable th{
+  padding: 8px;
 }
 
 .tag-tagtable  th:first-child,
@@ -58,7 +59,7 @@
 }
 
 .tag-tagtable tr:nth-child(odd) {
-  background-color: #f2f2f2;
+  // background-color: #f2f2f2;
 }
 
 .tag-tagtable td:nth-child(1) {

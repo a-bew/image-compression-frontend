@@ -9,7 +9,7 @@ interface DialogProps {
 }
 
 const Dialog: React.FC<DialogProps> = React.memo(({ isOpen, onClose, children }) => {
-
+  const dialogRef = useRef<HTMLDivElement>(null);
   const handleClick = useCallback((event: any) => {
     if (event.target.className === 'dialog_dialog-overlay__PnSDC') {
         onClose();
@@ -27,17 +27,35 @@ useEffect(() => {
     };
 }, [handleClick, isOpen]);
 
+useEffect(() => {
+  const handleClickOutside = (event: MouseEvent) => {
+    // event.preventDefault();
+    if (dialogRef.current && !dialogRef.current.contains(event.target as Node)) {
+      onClose();
+    }
+  };
+  
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+}, [dialogRef]);
+
   if (!isOpen) {
     return null;
   }
 
   return (
     <div className={s["dialog-overlay"]}  >
-      <div className={s["dialog-content"]}>
-        <button className={s["close-button"]} onClick={onClose}>
+      <div className={s["dialog-content"]} ref = {dialogRef}>
+        {/* <button className={s["close-button"]} onClick={onClose}>
           Close
-        </button>
-        {children}
+        </button> */}
+        <div className={s["dialog-body"]}>
+          {children}
+
+        </div>
       </div>
     </div>
   );
